@@ -1,14 +1,26 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export default function Input({ label, ...props }) {
+export default function Input({ label, type='text', ...props }) {
 
   const [show, setShow] = useState(false)
+  const inputRef = useRef()
+  const [inputType, setType] = useState(type)
+
+  useEffect(() => {
+    if(show){
+      setType('text')
+      inputRef.current.focus()
+    }else if(type === 'password'){
+      setType('password')
+      inputRef.current.focus()
+    }
+  }, [show])
     
   return (
-    <label className="block relative">
-      <input
-        required
-        className="bg-zinc-50 border outline-none w-full h-[38px] rounded-sm focus:border-gray-400 px-2 peer 
+    <label className="relative flex bg-zinc-50 border rounded-sm focus-within:border-gray-400">
+      <input ref={inputRef}
+        required={true} type={inputType}
+        className="bg-zinc-50 outline-none w-full h-[38px] px-2 peer 
                     valid:pt-[10px] text-xs" {...props}
       />
       <small
@@ -17,10 +29,10 @@ export default function Input({ label, ...props }) {
       >
         {label}
       </small>
-      {props?.type === 'password' && (
-        <div className="absolute top-0 right-0 h-full flex items-center font-semibold">
+      {type === 'password' && props?.value && (
+        <button type="button" onClick={() => setShow(show => !show)} className=" h-full flex items-center text-sm font-semibold pr-2">
             {show ? 'Hide' : 'Show'}
-        </div>
+        </button>
       )}
     </label>
   );
