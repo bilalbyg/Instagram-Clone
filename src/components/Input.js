@@ -9,16 +9,14 @@ export default function Input({ label, type='text', ...props }) {
   useEffect(() => {
     if(show){
       setType('text')
-      inputRef.current.focus()
     }else if(type === 'password'){
       setType('password')
-      inputRef.current.focus()
     }
   }, [show])
     
   return (
     <label className="relative flex bg-zinc-50 border rounded-sm focus-within:border-gray-400">
-      <input ref={inputRef}
+      <input
         required={true} type={inputType}
         className="bg-zinc-50 outline-none w-full h-[38px] px-2 peer 
                     valid:pt-[10px] text-xs" {...props}
@@ -30,9 +28,9 @@ export default function Input({ label, type='text', ...props }) {
         {label}
       </small>
       {type === 'password' && props?.value && (
-        <button type="button" onClick={() => setShow(show => !show)} className=" h-full flex items-center text-sm font-semibold pr-2">
+        <div type="button" onClick={() => setShow(show => !show)} className=" h-full flex items-center text-sm font-semibold pr-2 select-none cursor-pointer">
             {show ? 'Hide' : 'Show'}
-        </button>
+        </div>
       )}
     </label>
   );
