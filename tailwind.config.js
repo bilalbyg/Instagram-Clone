@@ -11,7 +11,7 @@ module.exports = {
         link: "00376b"
       },
       backgroundImage:{
-        'login':'url(https://www.instagram.com/static/images/homepage/phones/home-phones.png/1dc085cdb87d.png)'
+        'login-pattern':'url(https://www.instagram.com/static/images/homepage/phones/home-phones.png/1dc085cdb87d.png)'
       }
     },
   },
