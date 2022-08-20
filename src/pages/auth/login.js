@@ -1,17 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import Input from "../../components/Input";
 import { AiFillFacebook } from "react-icons/ai";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { Navigate, useLocation, Link } from "react-router-dom";
 import { login } from "../../firebase.js";
 import { Formik, Form } from "formik";
 import { LoginSchema } from "../../validation/login-schema";
 import Button from "../../components/Button";
 import Separator from "../../components/Separator";
+import { useSelector } from "react-redux";
 
 export default function Login() {
-  const navigate = useNavigate();
+  const user = useSelector((state) => state.auth.user);
   const location = useLocation();
   const ref = useRef();
+
 
   useEffect(() => {
     let images = ref.current.querySelectorAll("img"),
@@ -36,14 +38,12 @@ export default function Login() {
     "https://www.instagram.com/static/images/homepage/screenshots/screenshot4-2x.png/8e9224a71939.png",
   ];
 
-  const handleSubmit = async (values, actions) => {
-    const response = await login(values.username, values.password); // eğer response yoksa yönlendirme yapılmaması için if bloğu eklendi
+  if (user) {
+    return <Navigate to={location.state?.return_url || "/"} replace={true}/>
+  }
 
-    if (response) {
-      navigate(location.state?.return_url || "/", {
-        replace: true,
-      });
-    }
+  const handleSubmit = async (values, actions) => {
+    await login(values.username, values.password); // eğer response yoksa yönlendirme yapılmaması için if bloğu eklendi
   };
 
   return (

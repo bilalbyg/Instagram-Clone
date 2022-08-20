@@ -3,37 +3,72 @@ import Home from "./pages/home";
 import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
 import AuthLayout from "./pages/auth";
+import MainLayout from "./pages/layout";
+import ProfileLayout from "./pages/profile";
+import ProfilePosts from "./pages/profile/components/posts";
+import ProfileTagged from "./pages/profile/components/tagged";
+import ProfileSaved from "./pages/profile/components/saved";
+import Logout from "./pages/logout";
 
 const routes = [
-	{
-		path: '/',
-		element: <Home />,
-		auth: true
-	},
-	{
-		path: '/auth',
-		element: <AuthLayout />,
-		children: [
-			{
-				path: 'login',
-				element: <Login />
-			},
-			{
-				path: 'register',
-				element: <Register />
-			}
-		]
-	}
-]
+  {
+    path: "/",
+    element: <MainLayout />,
+    auth: true,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path : 'logout',
+        element : <Logout />
+      },
+      {
+        path: ":username",
+        element: <ProfileLayout />,
+        children: [
+          {
+            index: true,
+            element: <ProfilePosts />,
+          },
+		  {
+			path: 'tagged',
+			element : <ProfileTagged/>
+		  },
+		  {
+			path: 'saved',
+			element : <ProfileSaved/>
+		  }
+        ],
+      },
+    ],
+  },
+  {
+    path: "/auth",
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "register",
+        element: <Register />,
+      },
+    ],
+  },
+];
 
-const authCheck = routes => routes.map(route => {
-	if (route?.auth) {
-		route.element = <PrivateRoute>{route.element}</PrivateRoute>
-	}
-	if (route?.children) {
-		route.children = authCheck(route.children)
-	}
-	return route
-})
+const authCheck = (routes) =>
+  routes.map((route) => {
+    if (route?.auth) {
+      route.element = <PrivateRoute>{route.element}</PrivateRoute>;
+    }
+    if (route?.children) {
+      route.children = authCheck(route.children);
+    }
+    return route;
+  });
 
-export default authCheck(routes)
+export default authCheck(routes);
