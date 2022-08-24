@@ -115,7 +115,7 @@ export default function Login() {
         </div>
 
         <div className="bg-white border p-4 text-sm text-center">
-          Don't have an account?{" "}
+          Don't have an account?
           <Link to="/auth/register" className="font-semibold text-brand">
             Sign up
           </Link>

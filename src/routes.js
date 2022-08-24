@@ -9,6 +9,9 @@ import ProfilePosts from "./pages/profile/components/posts";
 import ProfileTagged from "./pages/profile/components/tagged";
 import ProfileSaved from "./pages/profile/components/saved";
 import Logout from "./pages/logout";
+import InboxLayout from "./pages/inbox";
+import Inbox from "./pages/inbox/inbox";
+import Chat from "./pages/inbox/chat";
 
 const routes = [
   {
@@ -21,8 +24,8 @@ const routes = [
         element: <Home />,
       },
       {
-        path : 'logout',
-        element : <Logout />
+        path: "logout",
+        element: <Logout />,
       },
       {
         path: ":username",
@@ -32,16 +35,30 @@ const routes = [
             index: true,
             element: <ProfilePosts />,
           },
-		  {
-			path: 'tagged',
-			element : <ProfileTagged/>
-		  },
-		  {
-			path: 'saved',
-			element : <ProfileSaved/>
-		  }
+          {
+            path: "tagged",
+            element: <ProfileTagged />,
+          },
+          {
+            path: "saved",
+            element: <ProfileSaved />,
+          },
         ],
       },
+      {
+        path : "inbox",
+        element : <InboxLayout/>,
+        children : [
+          {
+            index : true,
+            element : <Inbox />
+          },
+          {
+            path: ':converstaionId',
+            element : <Chat />
+          }
+        ]
+      }
     ],
   },
   {

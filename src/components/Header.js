@@ -8,8 +8,8 @@ export default function Header() {
   const user = useSelector(state => state.auth.user)
 
   return (
-    <header className="bg-white border-b border-gray-300 px-72">
-      <div className="flex items-center justify-between h-[60px] mx-auto">
+    <header className="bg-white border-b border-gray-300">
+      <div className="flex items-center justify-between h-[60px] container mx-auto">
         <Link to="/">
           <img
             className="h-[29px]"
@@ -23,7 +23,7 @@ export default function Header() {
           <NavLink to={"/"}>
             <Icon name="home" size={24} />
           </NavLink>
-          <NavLink to={"/"}>
+          <NavLink to={"/inbox"}>
             <Icon name="direct" size={24} />
           </NavLink>
           <NavLink to={"/"}>
